@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil de l'application{% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+
+    <h1 classname="mx-auto mt-5 mb-3"><strong>📜 Liste des activités existantes</strong></h1>  
+
+    <table class="table table-striped table-hover mt-2 my-5">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">MaxCapacity</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+            </tr>
+        </thead>
+        <tbody>                        
+            {% for la in listActivities %}
+            <tr>
+            <th scope="row">{{ la.id }}</th>
+            <td>{{ la.name }}</td>
+            <td>{{ la.maxCapacity }}</td>
+            <td>{{ la.startTime|date }}</td>
+            <td>{{ la.endTime|date }}</td>
+            </tr>
+            {% endfor %}            
+        </tbody>
+    </table>
+
+    <h2 classname="mx-auto mt-5 mb-3"><strong>✅ Formulaire de réservation</strong></h2>  
+    
+    {{ form_start(form) }}
+        {{ form_row(form.userName) }}
+        {{ form_row(form.activity) }}
+        {{ form_row(form.bookingTime) }}
+        {{ form_row(form.participants) }}
+        <button class="btn btn-primary">Réserver</button>
+    {{ form_end(form) }}   
+
+
+{% endblock %}

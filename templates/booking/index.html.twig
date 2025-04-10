@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de réservation{% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+
+    <h1 classname="mx-auto mt-5 mb-3"><strong>📜 Liste des réservations existantes</strong></h1> 
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            ❌ {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            ✅ {{ message }}
+        </div>
+    {% endfor %}
+
+    <table class="table table-striped table-hover my-2">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Activity</th>
+            <th scope="col">Booking Time</th>
+            <th scope="col">Persons</th>
+            </tr>
+        </thead>
+        <tbody>            
+            {% for lb in listBookings %}
+            <tr>
+            <th scope="row">{{ lb.id }}</th>
+            <td>{{ lb.userName }}</td>
+            <td>{{ lb.activity.name }}</td>
+            <td>{{ lb.bookingTime|date }}</td>
+            <td>{{ lb.participants }}</td>
+            </tr>
+            {% endfor %}            
+        </tbody>
+    </table>
+
+{% endblock %}
+
