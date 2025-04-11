@@ -21,26 +21,25 @@ class BookingManager {
 
     public function addBooking(Booking $booking): void {
 
-        // Vérifier la disponibilité
-        if ($this->repoA->getActivityByUserName($this->activityName)->getStartTime() > $booking->getBookingTime()) {
-            throw new Exception("❌ Cet horaire " .$booking->getBookingTime(). " est trop tôt pour réserver l'activité ".$this->activityName);
+        // Vérifier la disponibilité          
+        if ($this->repoA->getActivityByName($this->activityName)->getStartTime()->format('H') > $booking->getBookingTime()->format('H')) {
+            throw new Exception("❌ Cet horaire " .$booking->getBookingTime()->format('H'). " heure est trop tôt pour réserver l'activité ".$this->activityName);
         }
 
-        if ($this->repoA->getActivityByUserName($this->activityName)->getEndTime() <= $booking->getBookingTime()) {
-            throw new Exception("❌ Cet horaire " .$booking->getBookingTime(). " est trop tard pour réserver l'activité ".$this->activityName);
+        if ($this->repoA->getActivityByName($this->activityName)->getEndTime()->format('H') <= $booking->getBookingTime()->format('H')) {
+            throw new Exception("❌ Cet horaire " .$booking->getBookingTime()->format('H'). " heure est trop tard pour réserver l'activité ".$this->activityName);
         }
 
         // Vérifier la capacité
         $nb_participants=0;
-        $bookings = $this->repoB->getAllBookings();        
-        foreach ($bookings as $b) {
-            if (($this->activityName === $b->getActivity()->getName())
-                && ($b->getBookingTime() === $this->repoA->getActivityByUserName($this->activityName)->getStartTime())) {
-                $nb_participants += $b->getParticipants();
-            }            
+        $bookings = $this->repoB->getAllBookings();           
+        foreach ($bookings as $b) {                  
+            if (($this->activityName === $b->getActivity()->getName()) && ($b->getBookingTime() == $booking->getBookingTime())) {                                              
+                $nb_participants += $b->getParticipants();                             
+            }          
         }           
-        if ($this->repoA->getActivityByUserName($this->activityName)->getMaxCapacity() < ($booking->getParticipants() + $nb_participants)) {
-            throw new Exception("❌ Le nombre de participant ".$booking->getParticipants()." est trop élevé, maximum autorisé ".$this->repoA->getActivityByUserName($this->activityName)->getMaxCapacity());
+        if ($this->repoA->getActivityByName($this->activityName)->getMaxCapacity() < ($booking->getParticipants() + $nb_participants)) {
+            throw new Exception("❌ Le nombre de participant ".$booking->getParticipants()." est trop élevé, maximum autorisé ".$this->repoA->getActivityByName($this->activityName)->getMaxCapacity().", déjà inscris à la même heure : ".$nb_participants);
         }
 
         // Vérifier les doublons

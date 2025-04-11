@@ -24,8 +24,8 @@
             <th scope="row">{{ la.id }}</th>
             <td>{{ la.name }}</td>
             <td>{{ la.maxCapacity }}</td>
-            <td>{{ la.startTime|date }}</td>
-            <td>{{ la.endTime|date }}</td>
+            <td>{{ la.startTime|date("H:i") }}</td>
+            <td>{{ la.endTime|date("H:i") }}</td>
             </tr>
             {% endfor %}            
         </tbody>

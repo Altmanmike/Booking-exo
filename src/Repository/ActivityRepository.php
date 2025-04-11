@@ -54,7 +54,7 @@ class ActivityRepository extends ServiceEntityRepository
     /**
      * @return Activity|null Return an Activity object
      */
-    public function getActivityByUserName(string $name): ?Activity
+    public function getActivityByName(string $name): ?Activity
     {
         return $this->createQueryBuilder('activity')
             ->where('activity.name = :name')

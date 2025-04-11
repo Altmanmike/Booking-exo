@@ -36,7 +36,7 @@
             <th scope="row">{{ lb.id }}</th>
             <td>{{ lb.userName }}</td>
             <td>{{ lb.activity.name }}</td>
-            <td>{{ lb.bookingTime|date }}</td>
+            <td>{{ lb.bookingTime|date("H:i") }}</td>
             <td>{{ lb.participants }}</td>
             </tr>
             {% endfor %}            

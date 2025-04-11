@@ -34,6 +34,7 @@ final class AppController extends AbstractController
 
             } catch (\Exception $e) {
                 $this->addFlash('error', $e->getMessage());
+                return $this->redirectToRoute('app_booking');
             }
         }
 
